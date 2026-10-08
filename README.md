@@ -1,156 +1,130 @@
 <div align="center">
 
-<img src="https://media.tenor.com/KGigVwznyJYAAAAC/steal-flying.gif" height="220" alt="Minion flying through the sky"/>
-&nbsp;&nbsp;
-<img src="assets/pushing-the-button-stuart.gif" height="220" alt="Stuart pushing the launch button"/>
-
-<sub><code>ignition sequence start…</code></sub>
+<img src="assets/pushing-the-button-stuart-hd.gif" width="100%" alt="Stuart the minion pushing the launch button"/>
 
 <img src="assets/hero.svg" width="100%" alt="Manikandan Shanmugam: propulsion, energetics and autonomous flight"/>
 
-<a href="https://www.linkedin.com/in/manikandanaerox"><img src="https://img.shields.io/badge/LinkedIn-manikandanaerox-0A66C2?style=for-the-badge&labelColor=0C1428" alt="LinkedIn"/></a> <a href="mailto:manikandan.mechx@gmail.com"><img src="https://img.shields.io/badge/Email-manikandan.mechx%40gmail.com-FF8A2A?style=for-the-badge&labelColor=0C1428" alt="Email"/></a> <img src="https://img.shields.io/badge/Base-Poitiers%2C%20France-5CD4FF?style=for-the-badge&labelColor=0C1428" alt="Poitiers, France"/> <img src="https://img.shields.io/badge/Internship-6%20months%20from%20Mar%202027-3DDC97?style=for-the-badge&labelColor=0C1428" alt="Seeking a 6-month internship from March 2027"/>
+<p>
+<a href="https://www.linkedin.com/in/manikandanaerox"><b>LinkedIn</b></a>
+&nbsp;·&nbsp;
+<a href="mailto:manikandan.mechx@gmail.com"><b>manikandan.mechx@gmail.com</b></a>
+&nbsp;·&nbsp;
+Poitiers, France
+</p>
 
 </div>
 
 <br/>
 
-```yaml
-callsign:   manikandanaerox
-status:     M2 MSc Aeronautics & Space, Propulsion & Energetics @ ISAE-ENSMA
-background: Mechanical engineering → aerospace
-two sides:  [propulsion & thermal systems, autonomous drones]
-seeking:    6-month internship from March 2027
-domains:    propulsion · energetics · thermal engineering · CFD · autonomous aerial systems
-```
+I'm a second-year MSc student in Aeronautics and Space at **ISAE-ENSMA**, majoring in propulsion and energetics, with a background in mechanical engineering. My work has two sides. One is **propulsion and thermal systems**: engine cycles, combustion, supersonic flow and two-phase heat transfer. The other is **autonomous aircraft**, which I've spent four years designing, building and flying.
 
-<img src="assets/stats.svg" width="100%" alt="Key numbers"/>
+I'm looking for a **six-month internship from March 2027** in propulsion, energetics, thermal engineering, CFD or autonomous aerial systems.
+
+<br/>
+
+<img src="assets/stats.svg" width="100%" alt="100+ flight hours · Jury's Favourite, Dassault UAV Challenge 2026 · founded a 20-member team · 3,498 K · Mach 3 · EU drone pilot A1/A3"/>
 
 <img src="assets/divider.svg" width="100%" alt=""/>
 
-## 🔥 Propulsion & Energetics
+## Propulsion & Energetics
 
 <img src="assets/atrex.svg" width="100%" alt="ATREX precooled air-turbo ramjet"/>
 
-**ATREX precooled air-breathing engine: cycle and flight-domain analysis** · *Apr 2026*
-Full thermodynamic cycle of a liquid-hydrogen ATREX engine at **12,000 m and Mach 3**: intake, precooler, compressor map, combustion chamber, heat exchanger, turbine and nozzle. I computed thrust, specific impulse and efficiencies, then built the flight domain under thrust, drag and temperature limits. Result: a **four-engine vehicle can reach 30 km at Mach 5–6**.
+**ATREX precooled air-breathing engine** &nbsp;<sub>April 2026</sub><br/>
+A full thermodynamic cycle of a liquid-hydrogen ATREX engine at 12,000 m and Mach 3, covering intake, precooler, compressor map, combustor, heat exchanger, turbine and nozzle. From thrust, specific impulse and efficiencies I built the flight domain under thrust, drag and temperature limits. It shows that a four-engine vehicle can reach **30 km at Mach 5–6**.
 
 <table>
 <tr>
 <td width="50%" valign="top">
-<img src="assets/thrust-chamber.svg" width="100%" alt="H2/O2 thrust chamber"/>
-
-**H₂/O₂ combustion thermochemistry** · *Python, Cantera*
-Stoichiometric H₂/O₂ combustion under rocket-propulsion conditions: adiabatic flame temperature, chemical equilibrium and dissociation from **0.1 to 10⁴ MPa**, cross-checked against an analytical estimate (**3,498 K**).
+<img src="assets/thrust-chamber.svg" width="100%" alt="Hydrogen–oxygen thrust chamber"/>
+<br/><br/>
+<b>H₂/O₂ combustion thermochemistry</b><br/>
+<sub>Python · Cantera</sub><br/><br/>
+Stoichiometric hydrogen–oxygen combustion under rocket conditions: adiabatic flame temperature, chemical equilibrium and dissociation from 0.1 to 10⁴ MPa, cross-checked against an analytical estimate of 3,498 K.
 </td>
 <td width="50%" valign="top">
-<img src="assets/supersonic.svg" width="100%" alt="Mach 4 diamond airfoil"/>
-
-**Supersonic CFD** · *STAR-CCM+*
-A double-wedge airfoil at **Mach 4**, run inviscid (Euler) and viscous turbulent (Spalart–Allmaras) to separate wave drag from viscous drag, plus thickness and trailing-edge effects. I also modelled a Busemann biplane at incidence and nozzle flows at NPR 8 and 12.
+<img src="assets/supersonic.svg" width="100%" alt="Diamond airfoil at Mach 4"/>
+<br/><br/>
+<b>Supersonic CFD</b><br/>
+<sub>STAR-CCM+</sub><br/><br/>
+A double-wedge airfoil at Mach 4, run inviscid and with Spalart–Allmaras turbulence to separate wave drag from viscous drag. Also a Busemann biplane at incidence, and nozzle flows at pressure ratios of 8 and 12.
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
 <img src="assets/thermosyphon.svg" width="100%" alt="Two-phase loop thermosyphon"/>
-
-**Research Intern, Two-Phase Heat Transfer** · *Institut Pprime (CNRS · Univ. Poitiers · ISAE-ENSMA), Mar–Jul 2026*
-Experimental research on two-phase loop thermosyphons for passive thermal management. I improved the rig's accuracy and repeatability and ran high-speed visualisation alongside T, P and ṁ measurements. I wrote MATLAB routines for heat-transfer rates, thermal resistances and HTCs (Nu, Re, Pr), then studied how heat transfer couples with flow instabilities. A manuscript I'm co-authoring is under internal review.
+<br/><br/>
+<b>Research Intern, two-phase heat transfer</b><br/>
+<sub>Institut Pprime (CNRS · Université de Poitiers · ISAE-ENSMA) · March – July 2026</sub><br/><br/>
+Experimental work on loop thermosyphons for passive thermal management. I refined the rig for accuracy and repeatability, ran high-speed visualisation alongside temperature, pressure and mass-flow measurements, and wrote MATLAB routines for thermal resistances and heat-transfer coefficients. I'm co-authoring a manuscript on how heat transfer and flow instabilities interact; it is under internal review.
 </td>
 <td width="50%" valign="top">
-
-**More from the lab bench** 🧪
-
-- **Transient heat conduction in a sphere.** I wrote an explicit finite-volume solver in spherical coordinates with angle-dependent surface convection, derived its stability limit by von Neumann analysis and checked it with mesh refinement.
-- **Automated thermal test interface** (*MATLAB, Fortran*). A GUI for multi-sensor acquisition, live plots and automated post-processing.
-- **Coursework:** propulsion systems, combustion & thermochemistry, gas dynamics, heat transfer, fluid mechanics, numerical methods, instrumentation.
-
+<b>Also</b><br/><br/>
+<b>Transient conduction in a sphere.</b> An explicit finite-volume solver in spherical coordinates with angle-dependent surface convection. I derived its stability limit by von Neumann analysis and validated it with mesh refinement.<br/><br/>
+<b>Automated thermal test interface.</b> A MATLAB and Fortran application for multi-sensor acquisition, live visualisation and automatic post-processing.<br/><br/>
+<b>Coursework.</b> Propulsion systems, combustion and thermochemistry, gas dynamics, heat transfer, fluid mechanics, numerical methods and instrumentation.
 </td>
 </tr>
 </table>
 
 <img src="assets/divider.svg" width="100%" alt=""/>
 
-## 🛩️ Autonomous Flight
+## Autonomous Flight
 
-<img src="assets/vtol.svg" width="100%" alt="ENSMAERO VTOL 4+1 and mission planner"/>
+<img src="assets/vtol.svg" width="100%" alt="ENSMAERO VTOL 4+1 and mission planning"/>
 
-| | Project | What I did |
-|---|---|---|
-| 🏆 | **Dassault UAV Challenge 2026** · ENSMAERO, ISAE-ENSMA<br/><sub>Propulsion & UAV Systems Engineer · Oct 2025 – now</sub> | **Jury's Favourite Award** (*Prix Coup de cœur du jury*) among 28 teams with a modular autonomous **VTOL 4+1, 2 m span**. I did the propulsion design and CFD optimisation, integrated sensors with a SpeedyBee F405, and wrote control algorithms in Python/C++ that we validated in ground and flight tests. |
-| 🔥 | **Team Phoenix**, founder & captain · Team Turbonites LICET<br/><sub>Nov 2022 – Aug 2025</sub> | Founded and led a **20-member UAV team** that won an award at the **SAE Autonomous Drone Development Challenge 2024** (payload category). Took drones from CAD (SolidWorks) through FEA, 3D printing and flight test, with FC/IMU/GPS integration and Gazebo simulation. **100+ flight hours** as pilot. |
-| 🛰️ | **VTOL R&D Intern** · Team Reconnaissance, HTBI Chennai<br/><sub>Jul 2024 – Mar 2025</sub> | Built autonomous VTOLs on a Holybro FC with an NVIDIA Jetson Nano companion computer. Ran flight-test campaigns and wrote Python pipelines (NumPy/Pandas/Matplotlib) for the flight data. Tuned mission planning for fixed-wing and multirotor platforms. |
-| 🤖 | **Pixhawk MCP Server** · *ongoing* | A Python server that turns LLM tool calls into **MAVLink** commands (pymavlink) for Pixhawk/ArduPilot: telemetry, arm, take-off, GPS waypoints, land, RTL. Tested in ArduPilot SITL. |
-| 🎛️ | **Custom quadcopter flight controller** | My own FC with **automatic PID tuning** of the control loops, so a quad is ready to fly once it's set up. |
+**Dassault UAV Challenge 2026: Jury's Favourite Award** &nbsp;<sub>ENSMAERO · October 2025 – present</sub><br/>
+Our modular autonomous VTOL 4+1 with a 2 m wingspan won the *Prix Coup de cœur du jury* among 28 teams. I was responsible for propulsion design and CFD optimisation. I also integrated the sensors with a SpeedyBee F405 flight controller and wrote control algorithms in Python and C++, refined through ground and flight testing.
 
-```mermaid
-flowchart LR
-    A["🗣️ Natural-language command"] --> B["LLM tool call"]
-    B --> C["MCP server · Python"]
-    C -->|pymavlink| D["MAVLink"]
-    D --> E["ArduPilot SITL"]
-    D --> F["Pixhawk · real drone"]
-    F -->|telemetry| C
-```
+**Team Phoenix, founder and captain** &nbsp;<sub>Loyola-ICAM, Chennai · 2022 – 2025</sub><br/>
+I built a 20-member UAV team from scratch, and it won an award at the SAE Autonomous Drone Development Challenge 2024 (payload category). We took each drone from SolidWorks design through FEA and 3D printing to flight test, with Gazebo simulation along the way. I logged more than 100 hours as the team's pilot.
+
+**VTOL design and development** &nbsp;<sub>Team Reconnaissance, Hindustan Technology Business Incubator · 2024 – 2025</sub><br/>
+Autonomous VTOL aircraft built on a Holybro flight controller with an NVIDIA Jetson Nano companion computer. I ran the flight-test campaigns, wrote Python pipelines for flight data, and tuned mission planning for fixed-wing and multirotor platforms.
+
+**Natural-language drone control** &nbsp;<sub>ongoing</sub><br/>
+A Python server that turns language-model tool calls into MAVLink commands for a Pixhawk running ArduPilot: telemetry, arming, take-off, waypoints, landing and return to launch. I test it in ArduPilot's simulator.
+
+**A flight controller of my own** <br/>
+A custom quadcopter controller that tunes its own PID control loops, so a new build is ready to fly as soon as it's set up.
 
 <img src="assets/divider.svg" width="100%" alt=""/>
 
-## 🧭 Flight Log
+## Experience
 
-| When | Role | Where |
-|---|---|---|
-| 2025 – 2027 | 🎓 **MSc Aeronautics & Space, Propulsion & Energetics (M2)** | ISAE-ENSMA · Poitiers, FR |
-| Mar – Jul 2026 | 🔬 Research Intern, two-phase heat transfer | Institut Pprime · Poitiers, FR |
-| Oct 2025 – now | ✈️ Propulsion & UAV Systems Engineer | ENSMAERO / Dassault UAV Challenge |
-| Jul 2024 – Mar 2025 | 🛠️ R&D Engineering Intern, VTOL design | Team Reconnaissance, HTBI · Chennai, IN |
-| Feb – Apr 2024 | ⚙️ Automation & Systems Integration Intern | Loyola-ICAM (LICET) · Chennai, IN |
-| Jul 2023 | 🌬️ Wind Turbine Technician Intern | Litewind Ltd · Chennai, IN |
-| Jun – Jul 2023 | 📐 CMM Programmer Intern | Unique Measurement Service · Chennai, IN |
-| 2021 – 2025 | 🎓 **B.E. Mechanical Engineering** | Loyola-ICAM College of Engg. & Tech. · Chennai, IN |
+| Year | Role | Where |
+|:--|:--|:--|
+| **2025 – 2027** | MSc Aeronautics & Space, Propulsion & Energetics | *ISAE-ENSMA, Poitiers* |
+| **2026** | Research Intern, two-phase heat transfer | *Institut Pprime, Poitiers* |
+| **2025 – now** | Propulsion & UAV Systems Engineer | *ENSMAERO, Dassault UAV Challenge* |
+| **2024 – 2025** | R&D Engineering Intern, VTOL design | *Team Reconnaissance, Chennai* |
+| **2024** | Automation & Systems Integration Intern | *Loyola-ICAM, Chennai* |
+| **2023** | Wind Turbine Technician Intern | *Litewind Ltd, Chennai* |
+| **2023** | CMM Programmer Intern | *Unique Measurement Service, Chennai* |
+| **2021 – 2025** | B.E. Mechanical Engineering | *Loyola-ICAM College of Engineering & Technology, Chennai* |
 
-<details>
-<summary><b>Leadership & activities</b></summary>
-<br/>
+**Recognition.** Jury's Favourite Award, Dassault UAV Challenge 2026 · Award winner, SAE Autonomous Drone Development Challenge 2024 · EU-certified drone pilot (DGAC, A1/A3)
 
-- **Joint Secretary, ISHRAE Chennai Chapter** (Sep 2023 – Aug 2025): ran technical workshops and speaker sessions for a 500+ member student organisation.
-- **3D Printing Student Lead, LICET Fablab** (Jul 2023 – Aug 2025): organised fabrication and 3D-printing workshops and demos.
-- **Languages:** English (fluent) · French (A2) · Tamil (native)
+**Beyond the lab.** Joint Secretary of the ISHRAE Chennai Chapter (500+ members) · 3D Printing Student Lead at the LICET Fablab
 
-</details>
+**Languages.** English (fluent) · French (A2) · Tamil (native)
 
-<img src="assets/divider.svg" width="100%" alt=""/>
+## Toolkit
 
-## 🧰 Toolbox
-
-<div align="center">
-
-**Code**<br/>
-<img src="https://img.shields.io/badge/Python-0C1428?style=for-the-badge&logo=python&logoColor=FFD27A"/> <img src="https://img.shields.io/badge/NumPy%20·%20SciPy%20·%20Pandas-0C1428?style=for-the-badge&logo=numpy&logoColor=5CD4FF"/> <img src="https://img.shields.io/badge/MATLAB-0C1428?style=for-the-badge"/> <img src="https://img.shields.io/badge/C%2FC%2B%2B-0C1428?style=for-the-badge&logo=cplusplus&logoColor=5CD4FF"/> <img src="https://img.shields.io/badge/Fortran-0C1428?style=for-the-badge&logo=fortran&logoColor=E9EEF8"/> <img src="https://img.shields.io/badge/Git-0C1428?style=for-the-badge&logo=git&logoColor=FF8A2A"/> <img src="https://img.shields.io/badge/Linux%20·%20bash-0C1428?style=for-the-badge&logo=linux&logoColor=FFD27A"/>
-
-**Simulation & CFD**<br/>
-<img src="https://img.shields.io/badge/STAR--CCM%2B-0C1428?style=for-the-badge"/> <img src="https://img.shields.io/badge/ANSYS%20Fluent-0C1428?style=for-the-badge"/> <img src="https://img.shields.io/badge/Cantera-0C1428?style=for-the-badge"/> <img src="https://img.shields.io/badge/Finite%20Volume-0C1428?style=for-the-badge"/> <img src="https://img.shields.io/badge/Gazebo-0C1428?style=for-the-badge"/> <img src="https://img.shields.io/badge/ArduPilot%20SITL-0C1428?style=for-the-badge"/>
-
-**CAD & Manufacturing**<br/>
-<img src="https://img.shields.io/badge/CATIA-0C1428?style=for-the-badge"/> <img src="https://img.shields.io/badge/SolidWorks-0C1428?style=for-the-badge"/> <img src="https://img.shields.io/badge/Fusion%20360-0C1428?style=for-the-badge&logo=autodesk&logoColor=FF8A2A"/> <img src="https://img.shields.io/badge/FEA-0C1428?style=for-the-badge"/> <img src="https://img.shields.io/badge/3D%20Printing-0C1428?style=for-the-badge"/> <img src="https://img.shields.io/badge/CMM%20Inspection-0C1428?style=for-the-badge"/>
-
-**UAV & Embedded**<br/>
-<img src="https://img.shields.io/badge/Pixhawk%20Cube%20Orange-0C1428?style=for-the-badge"/> <img src="https://img.shields.io/badge/ArduPilot-0C1428?style=for-the-badge"/> <img src="https://img.shields.io/badge/MAVLink-0C1428?style=for-the-badge"/> <img src="https://img.shields.io/badge/QGroundControl%20·%20Mission%20Planner-0C1428?style=for-the-badge"/> <img src="https://img.shields.io/badge/Jetson%20Nano-0C1428?style=for-the-badge&logo=nvidia&logoColor=76B900"/> <img src="https://img.shields.io/badge/ESP32-0C1428?style=for-the-badge&logo=espressif&logoColor=FF4D3D"/> <img src="https://img.shields.io/badge/ATmega328-0C1428?style=for-the-badge"/> <img src="https://img.shields.io/badge/UART%20·%20I2C%20·%20SPI%20·%20CAN%20·%20PWM%20·%20RS485-0C1428?style=for-the-badge"/>
-
-</div>
-
-## 🏅 Awards & Certifications
-
-- 🏆 **Dassault UAV Challenge 2026**: *Prix Coup de cœur du jury* (Jury's Favourite Award), ENSMAERO team, among 28 teams
-- 🥇 **SAE Autonomous Drone Development Challenge 2024**: award winner (payload category), as founder & captain of Team Phoenix
-- 🪪 **EU Certified Drone Pilot (DGAC)**: A1/A3 Open Category
+| Area | Tools & methods |
+|:--|:--|
+| **Programming** | Python (NumPy, SciPy, Pandas, Matplotlib), MATLAB, C/C++, Fortran |
+| **Simulation** | STAR-CCM+, ANSYS Fluent, Cantera, finite-volume methods, Gazebo, ArduPilot SITL |
+| **Thermal & propulsion** | Heat transfer, two-phase systems, cycle analysis, combustion thermochemistry, gas dynamics, instrumentation |
+| **Design & manufacturing** | CATIA, SolidWorks, Fusion 360, FEA, 3D printing, CMM inspection |
+| **Flight systems** | Pixhawk Cube Orange, Holybro, SpeedyBee F405, ArduPilot, MAVLink, QGroundControl, Mission Planner, Jetson Nano, ESP32 |
 
 <img src="assets/divider.svg" width="100%" alt=""/>
 
 <div align="center">
 
-**Building something that flies, burns or transfers heat? Let's talk.**
+*Working on something that flies, burns or moves heat? I'd be glad to hear about it.*
 
-[linkedin.com/in/manikandanaerox](https://www.linkedin.com/in/manikandanaerox) · manikandan.mechx@gmail.com
-
-<sub>All illustrations are hand-built animated SVGs (<code>assets/generate.py</code>). Clear skies ✈️</sub>
+<a href="https://www.linkedin.com/in/manikandanaerox">linkedin.com/in/manikandanaerox</a> &nbsp;·&nbsp; manikandan.mechx@gmail.com
 
 </div>

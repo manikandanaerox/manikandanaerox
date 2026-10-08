@@ -6,15 +6,17 @@ os.makedirs(OUT, exist_ok=True)
 random.seed(7)
 
 # ---------- shared palette ----------
-BG0, BG1 = "#060A14", "#0C1428"
-LINE = "#22304F"
-TXT, MUTED = "#E9EEF8", "#8693AB"
-CYAN, ORANGE, HOT, RED, GREEN = "#5CD4FF", "#FF8A2A", "#FFD27A", "#FF4D3D", "#3DDC97"
-SANS = "'Segoe UI',Inter,Helvetica,Arial,sans-serif"
-MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace"
+BG0, BG1 = "#0B0D12", "#151B27"
+LINE = "#2B3140"
+TXT, MUTED = "#F3EFE7", "#9C978E"
+GOLD = "#D4B27A"
+CYAN, ORANGE, HOT, RED, GREEN = "#8EB8E0", "#E0925A", "#F1D3A0", "#C65A43", "#8CBFA0"
+SANS = "Inter,'Helvetica Neue',Helvetica,Arial,sans-serif"
+MONO = SANS
+SERIF = "'Instrument Serif',Georgia,'Times New Roman',serif"
 
 BASE_CSS = f"""
-.sans{{font-family:{SANS}}} .mono{{font-family:{MONO}}}
+.sans{{font-family:{SANS}}} .mono{{font-family:{MONO};font-weight:500}} .serif{{font-family:{SERIF};font-weight:400}}
 .spin{{transform-box:fill-box;transform-origin:center;animation:spin .22s linear infinite}}
 @keyframes spin{{to{{transform:rotate(360deg)}}}}
 .blink{{animation:blink 1.2s steps(2,start) infinite}}
@@ -66,6 +68,11 @@ def corner_brackets(w, h, m=14, s=16, c=CYAN):
     return f'<path d="{p}" fill="none" stroke="{c}" stroke-opacity=".45" stroke-width="1.5"/>'
 
 
+def header(label, title, x=24):
+    return (f'<text x="{x}" y="32" class="sans" font-size="10.5" font-weight="500" letter-spacing="2.6" fill="{GOLD}">{label}</text>'
+            f'<text x="{x}" y="60" class="serif" font-size="26" fill="{TXT}">{title}</text>')
+
+
 def write(name, svg):
     with open(os.path.join(OUT, name), "w") as f:
         f.write(svg)
@@ -77,12 +84,12 @@ def write(name, svg):
 def hero():
     W, H = 1200, 420
     streaks = []
-    for i in range(40):
+    for i in range(16):
         x = random.uniform(0, W)
         L = random.uniform(10, 50)
         d = random.uniform(0.7, 1.8)
         dl = -random.uniform(0, 2)
-        op = random.uniform(.12, .35)
+        op = random.uniform(.06, .16)
         streaks.append(f'<line x1="{x:.0f}" y1="-60" x2="{x:.0f}" y2="{-60+L:.0f}" stroke="#9FC3FF" stroke-opacity="{op:.2f}" stroke-width="1" style="animation:fall {d:.2f}s linear {dl:.2f}s infinite"/>')
     smoke = []
     for i in range(9):
@@ -110,8 +117,8 @@ def hero():
 """
     defs = f"""
 <linearGradient id="flameG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".18" stop-color="{HOT}"/><stop offset=".55" stop-color="{ORANGE}"/><stop offset="1" stop-color="{RED}" stop-opacity="0"/></linearGradient>
-<linearGradient id="nameG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="{HOT}"/><stop offset=".55" stop-color="{ORANGE}"/><stop offset="1" stop-color="{RED}"/></linearGradient>
-<radialGradient id="earth" cx="50%" cy="0%" r="70%"><stop offset="0" stop-color="#1B3A7A"/><stop offset="1" stop-color="#070C1A"/></radialGradient>
+<linearGradient id="nameG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F3DDB2"/><stop offset=".6" stop-color="{GOLD}"/><stop offset="1" stop-color="#B98A55"/></linearGradient>
+<radialGradient id="earth" cx="50%" cy="0%" r="70%"><stop offset="0" stop-color="#24304A"/><stop offset="1" stop-color="#070C1A"/></radialGradient>
 <linearGradient id="body" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9AA6BC"/><stop offset=".45" stop-color="#F4F7FC"/><stop offset="1" stop-color="#8090AA"/></linearGradient>
 <clipPath id="typeClip"><rect x="64" y="258" width="0" height="34"><animate attributeName="width" values="0;640;640;0" keyTimes="0;.32;.88;1" dur="9s" repeatCount="indefinite"/></rect></clipPath>
 """
@@ -131,7 +138,7 @@ def hero():
     <circle cx="-3" cy="75" r="3" fill="{CYAN}" opacity=".8"/>
     <path d="M-17,170 L-14,180 L14,180 L17,170 Z" fill="#4A5670"/>
     <path d="M-4,130 L-4,168 L4,168 L4,130 Z" fill="#B4BFD2" opacity=".6"/>
-    <text x="0" y="148" text-anchor="middle" class="mono" font-size="8" fill="{BG1}" font-weight="700" transform="rotate(-90 0 148)">MS-01</text>
+    
   </g>
 </g>"""
     drone = f"""
@@ -146,37 +153,26 @@ def hero():
   <ellipse class="prop" cx="-22.5" cy="-13" rx="13" ry="1.6" fill="{CYAN}" opacity=".6" style="animation-delay:-.05s"/>
   <ellipse class="prop" cx="22.5" cy="-13" rx="13" ry="1.6" fill="{CYAN}" opacity=".6" style="animation-delay:-.02s"/>
   <circle cx="-38" cy="0" r="2" fill="{RED}" class="blink"/><circle cx="38" cy="0" r="2" fill="{GREEN}" class="blink" style="animation-delay:-.6s"/>
-  <path d="M0,12 L0,46" stroke="{CYAN}" stroke-opacity=".5" stroke-dasharray="2 4"/>
+  
 </g></g>
-<g class="mono" font-size="10" fill="{CYAN}" fill-opacity=".75">
-  <path d="M800,150 Q860,210 900,260 T960,330" fill="none" stroke="{CYAN}" stroke-opacity=".35" stroke-dasharray="3 6" class="flow"/>
-  <circle class="wp" cx="900" cy="260" r="4" fill="none" stroke="{CYAN}"/><text x="910" y="264">WP2</text>
-  <circle class="wp" cx="960" cy="330" r="4" fill="none" stroke="{CYAN}" style="animation-delay:-.8s"/><text x="970" y="334">RTL</text>
-</g>"""
+"""
     text = f"""
-<g class="rise" style="animation-delay:.1s"><text x="64" y="104" class="mono" font-size="13" letter-spacing="3" fill="{CYAN}">// MISSION PROFILE · AEROSPACE ENGINEER</text></g>
-<g class="rise" style="animation-delay:.3s"><text x="62" y="170" class="sans" font-size="60" font-weight="800" letter-spacing="1" fill="{TXT}">MANIKANDAN</text></g>
-<g class="rise" style="animation-delay:.5s"><text x="62" y="234" class="sans" font-size="60" font-weight="800" letter-spacing="1" fill="url(#nameG)">SHANMUGAM</text></g>
-<g clip-path="url(#typeClip)"><text x="64" y="282" class="mono" font-size="19" fill="{TXT}">&gt; propulsion · energetics · autonomous flight</text></g>
-<rect class="caret" x="64" y="266" width="10" height="20" fill="{ORANGE}"><animate attributeName="x" values="64;704;704;64" keyTimes="0;.32;.88;1" dur="9s" repeatCount="indefinite"/></rect>
-<g class="rise" style="animation-delay:.8s"><text x="64" y="320" class="sans" font-size="15" fill="{MUTED}">MSc Aeronautics &amp; Space @ ISAE-ENSMA  ·  Institut Pprime  ·  Dassault UAV Challenge 2026</text></g>
+<g class="rise" style="animation-delay:.1s"><text x="64" y="100" class="sans" font-size="11.5" font-weight="500" letter-spacing="3.2" fill="{GOLD}">AEROSPACE ENGINEER  ·  PROPULSION &amp; ENERGETICS</text></g>
+<g class="rise" style="animation-delay:.3s"><text x="60" y="180" class="serif" font-size="88" fill="{TXT}">Manikandan</text></g>
+<g class="rise" style="animation-delay:.5s"><text x="60" y="256" class="serif" font-size="88" font-style="italic" fill="url(#nameG)">Shanmugam</text></g>
+<g class="rise" style="animation-delay:.8s"><text x="64" y="300" class="sans" font-size="16" fill="{TXT}" fill-opacity=".85">MSc Aeronautics &amp; Space, ISAE-ENSMA — propulsion, energetics &amp; autonomous flight</text></g>
 <g class="rise" style="animation-delay:1s">
-  <rect x="64" y="342" width="356" height="30" rx="15" fill="{GREEN}" fill-opacity=".1" stroke="{GREEN}" stroke-opacity=".5"/>
-  <circle cx="84" cy="357" r="4.5" fill="{GREEN}" class="pulse"/>
-  <text x="98" y="361.5" class="mono" font-size="12" letter-spacing="1" fill="{GREEN}">OPEN TO 6-MONTH INTERNSHIP · MAR 2027</text>
+  <rect x="64" y="328" width="392" height="34" rx="17" fill="{GOLD}" fill-opacity=".06" stroke="{GOLD}" stroke-opacity=".55"/>
+  <circle cx="84" cy="345" r="3.5" fill="{GOLD}" class="pulse"/>
+  <text x="98" y="349.5" class="sans" font-size="13" fill="{TXT}">Available for a six-month internship from March 2027</text>
 </g>"""
-    hud = f"""
-{corner_brackets(W, H)}
-<g class="mono" font-size="10" fill="{MUTED}" letter-spacing="1">
-  <text x="{W-30}" y="38" text-anchor="end">46.65°N  0.37°E · POITIERS, FR</text>
-  <text x="{W-30}" y="{H-26}" text-anchor="end">T+ <tspan fill="{ORANGE}">ASCENT</tspan> · GO FOR LAUNCH</text>
-</g>"""
+    hud = ""
     body = f"""
-{stars(W, H, 90, avoid=((40, 70, 720, 385), (930, 20, 1190, 50), (960, 370, 1190, 410)))}
+{stars(W, H, 55, avoid=((40, 70, 720, 385), (930, 20, 1190, 50), (960, 370, 1190, 410)))}
 <g>{''.join(streaks)}</g>
 <ellipse cx="560" cy="1180" rx="1100" ry="820" fill="url(#earth)"/>
-<ellipse cx="560" cy="1180" rx="1100" ry="820" fill="none" stroke="{CYAN}" stroke-opacity=".55" stroke-width="2" filter="url(#soft)"/>
-<ellipse cx="560" cy="1180" rx="1100" ry="820" fill="none" stroke="{CYAN}" stroke-opacity=".18" stroke-width="18" filter="url(#glow)"/>
+<ellipse cx="560" cy="1180" rx="1100" ry="820" fill="none" stroke="{CYAN}" stroke-opacity=".35" stroke-width="1.5" filter="url(#soft)"/>
+<ellipse cx="560" cy="1180" rx="1100" ry="820" fill="none" stroke="{CYAN}" stroke-opacity=".1" stroke-width="18" filter="url(#glow)"/>
 {drone}
 {rocket}
 {text}
@@ -292,16 +288,13 @@ def atrex():
     lab = []
     for tx, x, n, t, s in labels:
         lab.append(f'<path d="M{tx},375 V382 H{x} V388" fill="none" stroke="{MUTED}" stroke-opacity=".6"/>'
-                   f'<text x="{x}" y="404" text-anchor="middle" class="mono" font-size="11.5" letter-spacing="1" fill="{TXT}">{n} {t}</text>'
+                   f'<text x="{x}" y="404" text-anchor="middle" class="mono" font-size="11.5" letter-spacing="1.2" fill="{TXT}">{n} {t}</text>'
                    f'<text x="{x}" y="421" text-anchor="middle" class="sans" font-size="11.5" fill="{MUTED}">{s}</text>')
 
     body = f"""
-{stars(W, H, 40)}
-<g class="mono">
-  <text x="32" y="36" font-size="13" letter-spacing="3" fill="{ORANGE}">PROPULSION // ATREX</text>
-  <text x="32" y="58" font-size="12" fill="{MUTED}" class="sans">Precooled air-turbo ramjet, expander cycle · full cycle + flight-domain analysis at 12 km / Mach 3</text>
-  <text x="{W-32}" y="36" font-size="12" text-anchor="end" fill="{TXT}">4-engine vehicle → <tspan fill="{HOT}">30 km · Mach 5–6</tspan></text>
-</g>
+{stars(W, H, 25)}
+{header("PROPULSION", "ATREX precooled air-turbo ramjet", 32)}
+<text x="{W-32}" y="36" class="serif" font-style="italic" font-size="19" text-anchor="end" fill="{TXT}">Four engines → <tspan fill="{GOLD}">30 km, Mach 5–6</tspan></text>
 <!-- LH2 system -->
 <rect x="246" y="70" width="108" height="30" rx="15" fill="{CYAN}" fill-opacity=".1" stroke="{CYAN}" stroke-opacity=".7"/>
 <text x="300" y="89.5" text-anchor="middle" class="mono" font-size="11" fill="{CYAN}">LH₂ TANK</text>
@@ -330,7 +323,7 @@ def atrex():
 <g fill="{HOT}">{''.join(f'<circle cx="530" cy="{y}" r="2"/><circle cx="530" cy="{mir(y)}" r="2"/>' for y in (172, 186, 200))}</g>
 <g>{''.join(lab)}</g>
 <g class="mono" font-size="10" fill="{MUTED}">
-  <circle cx="{W-300}" cy="56" r="4" fill="#FFC58A"/><text x="{W-290}" y="60">hot ram air</text>
+  <circle cx="{W-300}" cy="56" r="4" fill="#E8C29A"/><text x="{W-290}" y="60">hot ram air</text>
   <circle cx="{W-200}" cy="56" r="4" fill="{CYAN}"/><text x="{W-190}" y="60">precooled</text>
   <circle cx="{W-108}" cy="56" r="4" fill="{ORANGE}"/><text x="{W-98}" y="60">burnt gas</text>
 </g>"""
@@ -372,8 +365,7 @@ def thrust():
 """
     body = f"""
 {stars(W, H, 25)}
-<text x="24" y="34" class="mono" font-size="12.5" letter-spacing="3" fill="{ORANGE}">COMBUSTION // H₂ + O₂</text>
-<text x="24" y="54" class="sans" font-size="12" fill="{MUTED}">Cantera · equilibrium &amp; dissociation, 0.1 → 10⁴ MPa</text>
+{header("COMBUSTION", "Hydrogen–oxygen thrust chamber")}
 <!-- feed lines -->
 <path class="lh2" d="M40,90 H58 V180" stroke="{CYAN}" stroke-width="2.5" fill="none"/>
 <path class="lh2" d="M40,340 H58 V250" stroke="#E6F4FF" stroke-width="2.5" fill="none"/>
@@ -398,10 +390,10 @@ def thrust():
   <text x="400" y="292" text-anchor="middle">bell nozzle</text>
 </g>
 <g transform="translate(330 76)">
-  <text class="mono" font-size="10" fill="{MUTED}" letter-spacing="1">ADIABATIC FLAME TEMP.</text>
-  <text y="34" class="sans" font-size="32" font-weight="800" fill="{HOT}">3,498 K</text>
+  <text class="sans" font-size="10" font-weight="500" fill="{MUTED}" letter-spacing="2">ADIABATIC FLAME TEMPERATURE</text>
+  <text y="40" class="serif" font-size="44" fill="{HOT}">3,498 K</text>
 </g>
-<text x="300" y="352" text-anchor="middle" class="mono" font-size="10.5" fill="{MUTED}" letter-spacing="1">H₂O · OH · H · O · H₂ · O₂  — equilibrium species</text>
+<text x="300" y="352" text-anchor="middle" class="mono" font-size="10.5" fill="{MUTED}" letter-spacing="1.2">H₂O · OH · H · O · H₂ · O₂  — equilibrium species</text>
 """
     write("thrust-chamber.svg", frame(W, H, body, css, "Animated H2/O2 rocket thrust chamber with Mach diamonds", defs))
 
@@ -483,11 +475,10 @@ def shocks():
     defs = '<clipPath id="field"><rect x="0" y="70" width="600" height="270"/></clipPath>'
     body = f"""
 {stars(W, H, 20)}
-<text x="24" y="34" class="mono" font-size="12.5" letter-spacing="3" fill="{ORANGE}">SUPERSONIC CFD // STAR-CCM+</text>
-<text x="24" y="54" class="sans" font-size="12" fill="{MUTED}">Diamond airfoil · Euler vs Spalart–Allmaras → wave drag vs viscous drag</text>
+{header("SUPERSONIC CFD", "Diamond airfoil at Mach 4")}
 <g clip-path="url(#field)">
-  <polygon points="{poly(comp)}" fill="{ORANGE}" fill-opacity=".16"/>
-  <polygon points="{poly(comp, True)}" fill="{ORANGE}" fill-opacity=".16"/>
+  <polygon points="{poly(comp)}" fill="{ORANGE}" fill-opacity=".08"/>
+  <polygon points="{poly(comp, True)}" fill="{ORANGE}" fill-opacity=".08"/>
   <polygon points="{poly(expn)}" fill="{CYAN}" fill-opacity=".14"/>
   <polygon points="{poly(expn, True)}" fill="{CYAN}" fill-opacity=".14"/>
   {''.join(sl)}
@@ -496,14 +487,14 @@ def shocks():
 </g>
 <polygon points="{LE[0]},{C} {MID[0]},{C-t} {TE[0]},{C} {MID[0]},{C+t}" fill="#D5DDEB" stroke="#fff" stroke-width="1"/>
 <g class="mono" font-size="10.5">
-  <text x="26" y="{C-6}" fill="{TXT}" font-size="15" font-weight="700">M∞ = 4</text>
+  <text x="26" y="{C-8}" fill="{TXT}" font-size="22" class="serif" font-style="italic">M∞ = 4</text>
   <path d="M28,{C+8} H110" stroke="{TXT}" stroke-width="1.5"/>
   <path d="M104,{C+4} L112,{C+8} L104,{C+12}" fill="none" stroke="{TXT}" stroke-width="1.5"/>
   <text x="330" y="88" fill="#fff">oblique shock</text>
   <text x="462" y="140" fill="{CYAN}">expansion fan</text>
   <text x="440" y="{2*C-118}" fill="#fff">TE shock</text>
 </g>
-<g class="mono" font-size="10" fill="{MUTED}" letter-spacing="1">
+<g class="mono" font-size="10" fill="{MUTED}" letter-spacing="1.2">
   <rect x="24" y="352" width="10" height="10" fill="{ORANGE}" fill-opacity=".5"/><text x="40" y="361">compression</text>
   <rect x="140" y="352" width="10" height="10" fill="{CYAN}" fill-opacity=".5"/><text x="156" y="361">expansion</text>
   <text x="576" y="361" text-anchor="end">+ Busemann biplane · nozzle flows NPR 8 / 12</text>
@@ -553,8 +544,7 @@ def thermo():
                                    f'<circle cx="{x+8}" cy="{y-8}" r="2.2" fill="{GREEN}" class="blink" style="animation-delay:{d}s"/>')
     body = f"""
 {stars(W, H, 18)}
-<text x="24" y="34" class="mono" font-size="12.5" letter-spacing="3" fill="{ORANGE}">RESEARCH // INSTITUT PPRIME</text>
-<text x="24" y="54" class="sans" font-size="12" fill="{MUTED}">Two-phase loop thermosyphon · passive thermal management</text>
+{header("RESEARCH · INSTITUT PPRIME", "Two-phase loop thermosyphon")}
 <!-- condenser -->
 <g>{''.join(f'<rect x="{x}" y="72" width="4" height="18" fill="#2E4B7A"/>' for x in range(208, 330, 10))}</g>
 <rect x="200" y="90" width="140" height="48" rx="6" fill="{CYAN}" fill-opacity=".15" stroke="{CYAN}"/>
@@ -579,13 +569,13 @@ def thermo():
 <g transform="translate(26 150)"><rect width="30" height="20" rx="3" fill="#2A3858" stroke="{MUTED}"/><path d="M30,6 L40,2 V18 L30,14 Z" fill="#2A3858" stroke="{MUTED}"/><circle cx="15" cy="10" r="5" fill="{BG0}" stroke="{CYAN}"/><circle cx="25" cy="4" r="1.6" fill="{RED}" class="blink"/></g>
 <text x="26" y="186" class="mono" font-size="9" fill="{MUTED}">high-speed</text>
 <!-- analysis panel -->
-<g class="mono" font-size="12" fill="{TXT}">
-  <text x="390" y="104" font-size="10" fill="{MUTED}" letter-spacing="1">MATLAB POST-PROCESSING</text>
-  <text x="390" y="132">R<tspan font-size="9" dy="3">th</tspan><tspan dy="-3"> = ΔT / Q</tspan></text>
-  <text x="390" y="158">h = q″ / ΔT</text>
-  <text x="390" y="184">Nu = f(Re, Pr)</text>
-  <text x="390" y="230" font-size="10" fill="{MUTED}" letter-spacing="1">T<tspan font-size="8" dy="2">evap</tspan><tspan dy="-2">(t) · FLOW INSTABILITY</tspan></text>
+<text x="390" y="104" class="sans" font-size="10" font-weight="500" fill="{MUTED}" letter-spacing="2">MATLAB ANALYSIS</text>
+<g class="serif" font-size="20" font-style="italic" fill="{TXT}">
+  <text x="390" y="136">R<tspan font-size="13" dy="4">th</tspan><tspan dy="-4"> = ΔT / Q</tspan></text>
+  <text x="390" y="166">h = q″ / ΔT</text>
+  <text x="390" y="196">Nu = f (Re, Pr)</text>
 </g>
+<text x="390" y="234" class="sans" font-size="10" font-weight="500" fill="{MUTED}" letter-spacing="2">FLOW INSTABILITY</text>
 <rect x="384" y="250" width="192" height="80" rx="6" fill="{BG0}" stroke="{LINE}"/>
 <g clip-path="url(#scope)">
   <g stroke="{LINE}" stroke-width=".7">{''.join(f'<line x1="{x}" y1="250" x2="{x}" y2="330"/>' for x in range(400, 576, 24))}</g>
@@ -630,13 +620,12 @@ def vtol():
     grid = "".join(f'<line x1="{x}" y1="40" x2="{x}" y2="410" />' for x in range(720, 1170, 40)) + \
            "".join(f'<line x1="700" y1="{y}" x2="1170" y2="{y}" />' for y in range(60, 410, 40))
     body = f"""
-{stars(W, H, 40)}
-<text x="32" y="36" class="mono" font-size="12.5" letter-spacing="3" fill="{ORANGE}">AUTONOMY // ENSMAERO VTOL 4+1</text>
-<text x="32" y="56" class="sans" font-size="12" fill="{MUTED}">Jury’s Favourite — Dassault UAV Challenge 2026</text>
+{stars(W, H, 25)}
+{header("JURY’S FAVOURITE · DASSAULT UAV CHALLENGE 2026", "ENSMAERO VTOL 4+1", 32)}
 <!-- mode readout -->
-<g class="mono" font-size="10.5" letter-spacing="1">
-  <g class="lift"><circle cx="38" cy="372" r="4" fill="{CYAN}" class="pulse"/><text x="50" y="376" fill="{CYAN}">VTOL HOVER</text></g>
-  <g class="still"><circle cx="38" cy="372" r="4" fill="{ORANGE}" class="pulse"/><text x="50" y="376" fill="{ORANGE}">FW CRUISE</text></g>
+<g class="mono" font-size="10.5" letter-spacing="1.2">
+  <g class="lift"><circle cx="38" cy="372" r="3.5" fill="{CYAN}" class="pulse"/><text x="50" y="376" class="serif" font-style="italic" font-size="17" letter-spacing="0" fill="{CYAN}">Hover</text></g>
+  <g class="still"><circle cx="38" cy="372" r="3.5" fill="{GOLD}" class="pulse"/><text x="50" y="376" class="serif" font-style="italic" font-size="17" letter-spacing="0" fill="{GOLD}">Cruise</text></g>
 </g>
 <!-- aircraft (top view) -->
 <g transform="translate(0 4)">
@@ -657,21 +646,20 @@ def vtol():
   <path d="M84,414 V404 M84,409 H596 M596,404 V414" stroke="{MUTED}" fill="none" transform="translate(0 0)"/>
   <rect x="300" y="401" width="80" height="16" fill="{BG1}"/><text x="340" y="413" text-anchor="middle" fill="{TXT}">2.0 m span</text>
 </g>
-<g class="mono" font-size="10.5" fill="{MUTED}" letter-spacing="1">
-  <text x="32" y="296">FC  SpeedyBee F405</text>
-  <text x="32" y="314">SW  Python · C++</text>
-  <text x="32" y="332">ME  propulsion+CFD</text>
+<g class="mono" font-size="10.5" fill="{MUTED}" letter-spacing="1.2">
+  <text x="32" y="250" font-size="9" fill="{GOLD}" letter-spacing="2">FLIGHT CONTROLLER</text><text x="32" y="266" class="sans" font-size="12" letter-spacing="0" fill="{TXT}">SpeedyBee F405</text>
+  <text x="32" y="290" font-size="9" fill="{GOLD}" letter-spacing="2">SOFTWARE</text><text x="32" y="306" class="sans" font-size="12" letter-spacing="0" fill="{TXT}">Python, C++</text>
+  <text x="32" y="330" font-size="9" fill="{GOLD}" letter-spacing="2">MY ROLE</text><text x="32" y="346" class="sans" font-size="12" letter-spacing="0" fill="{TXT}">Propulsion &amp; CFD</text>
 </g>
 <!-- mission planner panel -->
 <rect x="700" y="40" width="470" height="370" rx="12" fill="{BG0}" fill-opacity=".7" stroke="{LINE}"/>
 <g stroke="{LINE}" stroke-width=".6" opacity=".7">{grid}</g>
-<text x="716" y="64" class="mono" font-size="10.5" letter-spacing="2" fill="{CYAN}">MISSION · LLM → MCP → MAVLink → ArduPilot SITL</text>
+<text x="718" y="68" class="serif" font-size="19" fill="{TXT}">Mission planning <tspan font-style="italic" fill="{MUTED}">— plain-language control over MAVLink</tspan></text>
 <path class="route" d="{mission}" fill="none" stroke="{CYAN}" stroke-width="1.6"/>
 {''.join(f'<g><circle class="wpt" style="animation-delay:{-i*.3:.1f}s" cx="{x}" cy="{y}" r="7" fill="none" stroke="{CYAN}"/><text x="{x+12}" y="{y-8}" class="mono" font-size="10" fill="{TXT}">{"H" if i==0 else "WP"+str(i)}</text></g>' for i, (x, y) in enumerate(wp))}
 <path d="M-8,-6 L10,0 L-8,6 L-4,0 Z" fill="{ORANGE}"><animateMotion dur="12s" repeatCount="indefinite" rotate="auto" path="{mission}"/></path>
-<g class="mono" font-size="10" fill="{MUTED}" letter-spacing="1">
-  <text x="716" y="396">ARM · TAKEOFF · GOTO · LAND · RTL</text>
-  <text x="1156" y="396" text-anchor="end"><tspan fill="{GREEN}">●</tspan> LINK OK</text>
+<g class="mono" font-size="10" fill="{MUTED}" letter-spacing="1.2">
+  <text x="718" y="396">TAKE-OFF  ·  WAYPOINTS  ·  LANDING  ·  RETURN TO LAUNCH</text>
 </g>
 """
     write("vtol.svg", frame(W, H, body, css, "Animated VTOL 4+1 UAV with mission planner", ""))
@@ -682,22 +670,22 @@ def vtol():
 # =====================================================================
 def stats():
     W, H = 1200, 140
-    cells = [("100+", "FLIGHT HOURS", "as drone pilot", CYAN),
-             ("★ 2026", "JURY’S FAVOURITE", "Dassault UAV · 28 teams", HOT),
-             ("20", "CREW FOUNDED", "Team Phoenix · SAE", CYAN),
-             ("3,498 K", "H₂/O₂ FLAME", "adiabatic, Cantera", ORANGE),
-             ("M 3", "ATREX CYCLE", "at 12 km altitude", ORANGE),
-             ("A1/A3", "EU DRONE PILOT", "DGAC certified", GREEN)]
+    cells = [("100+", "FLIGHT HOURS", "as drone pilot", GOLD),
+             ("2026", "JURY’S FAVOURITE", "Dassault UAV · 28 teams", GOLD),
+             ("20", "TEAM FOUNDED", "Team Phoenix · SAE", GOLD),
+             ("3,498 K", "H₂/O₂ FLAME", "adiabatic, Cantera", GOLD),
+             ("Mach 3", "ATREX CYCLE", "at 12 km altitude", GOLD),
+             ("A1/A3", "EU DRONE PILOT", "DGAC certified", GOLD)]
     cw = W / len(cells)
     out = []
     for i, (n, a, b, c) in enumerate(cells):
         x = i * cw + 28
         out.append(f"""<g>
-  <text x="{x}" y="58" class="sans" font-size="30" font-weight="800" fill="{TXT}">{n}</text>
-  <text x="{x}" y="84" class="mono" font-size="11" letter-spacing="1.5" fill="{c}">{a}</text>
+  <text x="{x}" y="60" class="serif" font-size="40" fill="{TXT}">{n}</text>
+  <text x="{x}" y="84" class="sans" font-size="10" font-weight="500" letter-spacing="2" fill="{c}">{a}</text>
   <text x="{x}" y="102" class="sans" font-size="11.5" fill="{MUTED}">{b}</text>
-  <rect x="{x}" y="116" width="{cw-56:.0f}" height="3" rx="1.5" fill="{LINE}"/>
-  <rect x="{x}" y="116" width="{cw-56:.0f}" height="3" rx="1.5" fill="{c}" class="bar" style="animation-delay:{i*.25:.2f}s"/>
+  <rect x="{x}" y="116" width="{cw-56:.0f}" height="1.5" rx=".75" fill="{LINE}"/>
+  <rect x="{x}" y="116" width="{cw-56:.0f}" height="1.5" rx=".75" fill="{c}" class="bar" style="animation-delay:{i*.25:.2f}s"/>
 </g>""")
         if i:
             out.append(f'<line x1="{i*cw:.0f}" y1="26" x2="{i*cw:.0f}" y2="114" stroke="{LINE}"/>')
@@ -734,6 +722,45 @@ def divider():
     write("divider.svg", svg)
 
 
+# =====================================================================
+# Embed subsetted fonts (GitHub serves SVGs as images, so web fonts must be inline)
+# =====================================================================
+FONTS = [  # (family, style, weight, url)
+    ("Instrument Serif", "normal", 400, "https://fonts.gstatic.com/s/instrumentserif/v5/jizBRFtNs2ka5fXjeivQ4LroWlx-2zI.ttf"),
+    ("Instrument Serif", "italic", 400, "https://fonts.gstatic.com/s/instrumentserif/v5/jizHRFtNs2ka5fXjeivQ4LroWlx-6zATiw.ttf"),
+    ("Inter", "normal", 400, "https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf"),
+    ("Inter", "normal", 500, "https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI6fMZg.ttf"),
+]
+
+
+def embed_fonts():
+    import base64, html, io, re, urllib.request
+    from fontTools import subset
+    from fontTools.ttLib import TTFont
+    cache = os.path.join(os.path.expanduser("~"), ".cache", "readme-fonts")
+    os.makedirs(cache, exist_ok=True)
+    for name in os.listdir(OUT):
+        if not name.endswith(".svg"):
+            continue
+        p = os.path.join(OUT, name)
+        svg = open(p).read()
+        chars = set(html.unescape("".join(re.findall(r">([^<>]+)<", svg.split("</style>", 1)[-1])))) | set("0123456789")
+        faces = []
+        for fam, style, weight, url in FONTS:
+            local = os.path.join(cache, url.rsplit("/", 1)[-1])
+            if not os.path.exists(local):
+                urllib.request.urlretrieve(url, local)
+            font = TTFont(local)
+            opts = subset.Options(); opts.flavor = "woff2"; opts.layout_features = ["kern", "liga"]; opts.hinting = False
+            sub = subset.Subsetter(opts); sub.populate(text="".join(chars)); sub.subset(font)
+            buf = io.BytesIO(); font.flavor = "woff2"; font.save(buf)
+            b64 = base64.b64encode(buf.getvalue()).decode()
+            faces.append(f"@font-face{{font-family:'{fam}';font-style:{style};font-weight:{weight};src:url(data:font/woff2;base64,{b64}) format('woff2')}}")
+        svg = svg.replace("<style>", "<style>" + "".join(faces), 1)
+        open(p, "w").write(svg)
+
+
 for fn in (hero, atrex, thrust, shocks, thermo, vtol, stats, divider):
     fn()
+embed_fonts()
 print("ok")
