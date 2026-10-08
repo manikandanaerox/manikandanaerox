@@ -73,20 +73,15 @@ Experimental work on loop thermosyphons for passive thermal management. I refine
 
 <img src="assets/vtol.svg" width="100%" alt="ENSMAERO VTOL 4+1 and mission planning"/>
 
-**Dassault UAV Challenge 2026: Jury's Favourite Award** &nbsp;<sub>ENSMAERO · October 2025 – present</sub><br/>
-Our modular autonomous VTOL 4+1 with a 2 m wingspan won the *Prix Coup de cœur du jury* among 28 teams. I was responsible for propulsion design and CFD optimisation. I also integrated the sensors with a SpeedyBee F405 flight controller and wrote control algorithms in Python and C++, refined through ground and flight testing.
+<img src="assets/card-dassault.svg" width="100%" alt="Dassault UAV Challenge 2026, Jury's Favourite Award (ENSMAERO, ISAE-ENSMA, Oct 2025 to present). Our modular autonomous VTOL 4+1 with a 2 m wingspan won the Prix Coup de cœur du jury among 28 teams. I was responsible for propulsion design and CFD optimisation, sensor integration with a SpeedyBee F405 flight controller, and control algorithms in Python and C++."/>
 
-**Team Phoenix, founder and captain** &nbsp;<sub>Loyola-ICAM, Chennai · 2022 – 2025</sub><br/>
-I built a 20-member UAV team from scratch, and it won an award at the SAE Autonomous Drone Development Challenge 2024 (payload category). We took each drone from SolidWorks design through FEA and 3D printing to flight test, with Gazebo simulation along the way. I logged more than 100 hours as the team's pilot.
+<img src="assets/card-phoenix.svg" width="100%" alt="Team Phoenix, founder and captain (Loyola-ICAM, Chennai, 2022 to 2025). Built a 20-member UAV team that won an award at the SAE Autonomous Drone Development Challenge 2024 (payload category). Design in SolidWorks, FEA, 3D printing, flight test and Gazebo simulation; more than 100 hours as the team's pilot."/>
 
-**VTOL design and development** &nbsp;<sub>Team Reconnaissance, Hindustan Technology Business Incubator · 2024 – 2025</sub><br/>
-Autonomous VTOL aircraft built on a Holybro flight controller with an NVIDIA Jetson Nano companion computer. I ran the flight-test campaigns, wrote Python pipelines for flight data, and tuned mission planning for fixed-wing and multirotor platforms.
+<img src="assets/card-reconnaissance.svg" width="100%" alt="Team Reconnaissance, VTOL design and development (Hindustan Technology Business Incubator, 2024 to 2025). Autonomous VTOL aircraft on a Holybro flight controller with an NVIDIA Jetson Nano; flight-test campaigns, Python flight-data pipelines, mission planning for fixed-wing and multirotor platforms."/>
 
-**Natural-language drone control** &nbsp;<sub>ongoing</sub><br/>
-A Python server that turns language-model tool calls into MAVLink commands for a Pixhawk running ArduPilot: telemetry, arming, take-off, waypoints, landing and return to launch. I test it in ArduPilot's simulator.
+<img src="assets/card-mcp.svg" width="100%" alt="Natural-language drone control (personal project, ongoing). A Python server that turns language-model tool calls into MAVLink commands for a Pixhawk running ArduPilot: telemetry, arming, take-off, waypoints, landing and return to launch, tested in ArduPilot's simulator."/>
 
-**A flight controller of my own** <br/>
-A custom quadcopter controller that tunes its own PID control loops, so a new build is ready to fly as soon as it's set up.
+<img src="assets/card-fc.svg" width="100%" alt="A flight controller of my own (personal project). A custom quadcopter controller that tunes its own PID control loops, so a new build is ready to fly as soon as it's set up."/>
 
 <img src="assets/divider.svg" width="100%" alt=""/>
 

@@ -723,6 +723,123 @@ def divider():
 
 
 # =====================================================================
+# AUTONOMOUS FLIGHT — typeset project cards with logos
+# =====================================================================
+CARDS = [
+    ("card-dassault.svg", ["dassault-aviation.svg", "isae-ensma.jpg"],
+     "ENSMAERO · ISAE-ENSMA · OCTOBER 2025 – PRESENT",
+     "Dassault UAV Challenge 2026", "Jury’s Favourite Award",
+     "Our modular autonomous VTOL 4+1 with a 2 m wingspan won the Prix Coup de cœur du jury among 28 teams. "
+     "I was responsible for propulsion design and CFD optimisation. I also integrated the sensors with a SpeedyBee F405 "
+     "flight controller and wrote control algorithms in Python and C++, refined through ground and flight testing."),
+    ("card-phoenix.svg", ["team-phoenix.jpg", "sae-international.svg"],
+     "LOYOLA-ICAM, CHENNAI · 2022 – 2025",
+     "Team Phoenix", "Founder & captain",
+     "I built a 20-member UAV team from scratch, and it won an award at the SAE Autonomous Drone Development Challenge 2024 "
+     "(payload category). We took each drone from SolidWorks design through FEA and 3D printing to flight test, with Gazebo "
+     "simulation along the way. I logged more than 100 hours as the team’s pilot."),
+    ("card-reconnaissance.svg", ["team-reconnaissance.jpg"],
+     "HINDUSTAN TECHNOLOGY BUSINESS INCUBATOR · 2024 – 2025",
+     "Team Reconnaissance", "VTOL design & development",
+     "Autonomous VTOL aircraft built on a Holybro flight controller with an NVIDIA Jetson Nano companion computer. "
+     "I ran the flight-test campaigns, wrote Python pipelines for flight data, and tuned mission planning for fixed-wing "
+     "and multirotor platforms."),
+    ("card-mcp.svg", ["ardupilot.svg"],
+     "PERSONAL PROJECT · ONGOING",
+     "Natural-language drone control", "Pixhawk · ArduPilot · MAVLink",
+     "A Python server that turns language-model tool calls into MAVLink commands for a Pixhawk running ArduPilot: "
+     "telemetry, arming, take-off, waypoints, landing and return to launch. I test it in ArduPilot’s simulator."),
+    ("card-fc.svg", [None],
+     "PERSONAL PROJECT",
+     "A flight controller of my own", "Automatic PID tuning",
+     "A custom quadcopter controller that tunes its own PID control loops, so a new build is ready to fly as soon as it’s set up."),
+]
+
+
+def _measure():
+    from fontTools.ttLib import TTFont
+    import urllib.request
+    cache = os.path.join(os.path.expanduser("~"), ".cache", "readme-fonts")
+    os.makedirs(cache, exist_ok=True)
+    url = FONTS[2][3]
+    local = os.path.join(cache, url.rsplit("/", 1)[-1])
+    if not os.path.exists(local):
+        urllib.request.urlretrieve(url, local)
+    f = TTFont(local)
+    cmap, hmtx, upm = f.getBestCmap(), f["hmtx"], f["head"].unitsPerEm
+    return lambda text, size: sum(hmtx[cmap.get(ord(ch), cmap[ord("n")])][0] for ch in text) * size / upm
+
+
+def _wrap(text, width, size, measure):
+    lines, cur = [], ""
+    for w in text.split():
+        t = (cur + " " + w).strip()
+        if measure(t, size) > width and cur:
+            lines.append(cur); cur = w
+        else:
+            cur = t
+    return lines + [cur]
+
+
+def _logo_tile(x, y, w, h, fname):
+    import base64
+    tile = f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="12" fill="#F6F2EA"/>'
+    if fname is None:  # quadcopter line icon
+        cx, cy = x + w / 2, y + h / 2
+        arms = "".join(f'<line x1="{cx}" y1="{cy}" x2="{cx+dx}" y2="{cy+dy}"/><circle cx="{cx+dx}" cy="{cy+dy}" r="13" class="prop-ring"/>'
+                       for dx, dy in ((-30, -24), (30, -24), (-30, 24), (30, 24)))
+        return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="12" fill="{BG0}" stroke="{GOLD}" stroke-opacity=".5"/>'
+                f'<g stroke="{GOLD}" stroke-width="1.6" fill="none">{arms}<rect x="{cx-9}" y="{cy-9}" width="18" height="18" rx="4" fill="{BG0}"/></g>')
+    path = os.path.join(OUT, "logos", fname)
+    data = base64.b64encode(open(path, "rb").read()).decode()
+    mime = "image/svg+xml" if fname.endswith(".svg") else "image/jpeg"
+    dark = fname in ("team-phoenix.jpg", "team-reconnaissance.jpg")  # logos on black artwork
+    pad = {"team-phoenix.jpg": 0, "team-reconnaissance.jpg": 6}.get(fname, 14)
+    bg = "#000" if dark else "#F6F2EA"
+    clip = f"clip{abs(hash((fname, x, y)))}"
+    fit = "xMidYMid slice" if pad == 0 else "xMidYMid meet"
+    return (f'<clipPath id="{clip}"><rect x="{x}" y="{y}" width="{w}" height="{h}" rx="12"/></clipPath>'
+            f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="12" fill="{bg}"/>'
+            f'<image clip-path="url(#{clip})" x="{x+pad}" y="{y+pad}" width="{w-2*pad}" height="{h-2*pad}" preserveAspectRatio="{fit}" href="data:{mime};base64,{data}"/>'
+            f'<rect x="{x+.5}" y="{y+.5}" width="{w-1}" height="{h-1}" rx="12" fill="none" stroke="{GOLD}" stroke-opacity=".35"/>')
+
+
+def cards():
+    measure = _measure()
+    W, PAD, TW, TH, GAP = 1200, 36, 168, 104, 12
+    tx = PAD + TW + 40
+    tw = W - tx - PAD
+    css = """
+.rise{opacity:0;animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.rule{transform-box:fill-box;transform-origin:0 50%;animation:rule 1.4s cubic-bezier(.3,.7,.2,1) .2s both}
+@keyframes rule{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.prop-ring{animation:pulse 2.4s ease-in-out infinite}
+"""
+    from xml.sax.saxutils import escape as esc
+    for name, logos, label, title, sub, body in CARDS:
+        lines = [esc(l) for l in _wrap(body, tw, 15, measure)]
+        label, title, sub = esc(label), esc(title), esc(sub)
+        text_h = 96 + len(lines) * 24
+        tiles_h = len(logos) * TH + (len(logos) - 1) * GAP
+        H = max(text_h, tiles_h) + 2 * PAD - 8
+        ty = (H - tiles_h) / 2
+        tiles = "".join(_logo_tile(PAD, ty + i * (TH + GAP), TW, TH, f) for i, f in enumerate(logos))
+        tspans = "".join(f'<tspan x="{tx}" dy="{0 if i == 0 else 24}">{l}</tspan>' for i, l in enumerate(lines))
+        y0 = (H - text_h) / 2
+        content = f"""
+{tiles}
+<g class="rise" style="animation-delay:.1s">
+  <text x="{tx}" y="{y0+14}" class="sans" font-size="10.5" font-weight="500" letter-spacing="2.6" fill="{GOLD}">{label}</text>
+  <text x="{tx}" y="{y0+52}" class="serif" font-size="34" fill="{TXT}">{title} <tspan font-style="italic" fill="{GOLD}">— {sub}</tspan></text>
+</g>
+<rect class="rule" x="{tx}" y="{y0+68}" width="64" height="1.5" fill="{GOLD}"/>
+<g class="rise" style="animation-delay:.3s"><text x="{tx}" y="{y0+98}" class="sans" font-size="15" fill="{TXT}" fill-opacity=".86">{tspans}</text></g>
+"""
+        write(name, frame(W, int(H), content, css, f"{title} — {sub}"))
+
+
+# =====================================================================
 # Embed subsetted fonts (GitHub serves SVGs as images, so web fonts must be inline)
 # =====================================================================
 FONTS = [  # (family, style, weight, url)
@@ -760,7 +877,7 @@ def embed_fonts():
         open(p, "w").write(svg)
 
 
-for fn in (hero, atrex, thrust, shocks, thermo, vtol, stats, divider):
+for fn in (hero, atrex, thrust, shocks, thermo, vtol, stats, divider, cards):
     fn()
 embed_fonts()
 print("ok")
