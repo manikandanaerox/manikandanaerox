@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="36" viewBox="0 0 1200 36" role="img" aria-label="divider">
+<defs><linearGradient id="t" x1="0" x2="1"><stop offset="0" stop-color="#5CD4FF" stop-opacity="0"/><stop offset=".85" stop-color="#5CD4FF" stop-opacity=".5"/><stop offset="1" stop-color="#FF8A2A"/></linearGradient></defs>
+<style>
+.trail{transform-box:fill-box;transform-origin:0 50%;animation:trail 7s linear infinite}
+@keyframes trail{0%{transform:scaleX(0);opacity:1}85%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}
+.ship{animation:ship 7s linear infinite}
+@keyframes ship{0%{transform:translateX(0)}85%{transform:translateX(1200px)}100%{transform:translateX(1200px)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<line x1="0" y1="18" x2="1200" y2="18" stroke="#22304F" stroke-dasharray="2 6"/>
+<rect class="trail" x="0" y="17" width="1200" height="2" fill="url(#t)"/>
+<g class="ship"><g transform="translate(0 18)">
+  <circle r="7" fill="#FF8A2A" opacity=".35"/>
+  <path d="M-10,-4 L6,-4 L12,0 L6,4 L-10,4 Z" fill="#E9EEF8"/><path d="M-10,-4 L-14,-8 L-14,8 L-10,4 Z" fill="#FF4D3D"/>
+</g></g>
+</svg>
