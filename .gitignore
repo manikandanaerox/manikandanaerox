@@ -1,0 +1,9 @@
+# Local AI agent skills (installed via `npx skills add`), not part of the profile
+.agents/
+.claude/
+skills-lock.json
+
+# OS / editor clutter
+.DS_Store
+Thumbs.db
+__pycache__/

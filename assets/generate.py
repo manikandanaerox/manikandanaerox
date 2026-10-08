@@ -11,7 +11,7 @@ LINE = "#2B3140"
 TXT, MUTED = "#F3EFE7", "#9C978E"
 GOLD = "#D4B27A"
 CYAN, ORANGE, HOT, RED, GREEN = "#8EB8E0", "#E0925A", "#F1D3A0", "#C65A43", "#8CBFA0"
-SANS = "Inter,'Helvetica Neue',Helvetica,Arial,sans-serif"
+SANS = "Geist,'Helvetica Neue',Helvetica,Arial,sans-serif"
 MONO = SANS
 SERIF = "'Instrument Serif',Georgia,'Times New Roman',serif"
 
@@ -37,11 +37,16 @@ def frame(w, h, body, css="", label="", defs=""):
 <clipPath id="frame"><rect width="{w}" height="{h}" rx="16"/></clipPath>
 <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
 <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2"/></filter>
+<filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 .95  0 0 0 0 .88  0 0 0 .55 0"/></filter>
+<filter id="mono" color-interpolation-filters="sRGB"><feColorMatrix values="0 0 0 0 .95  0 0 0 0 .93  0 0 0 0 .9  0 0 0 1 0"/></filter>
+<radialGradient id="vignette" cx="30%" cy="0%" r="110%"><stop offset="0" stop-color="{GOLD}" stop-opacity=".07"/><stop offset=".6" stop-color="{GOLD}" stop-opacity="0"/></radialGradient>
 {defs}
 </defs>
 <style>{BASE_CSS}{css}</style>
 <g clip-path="url(#frame)">
 <rect width="{w}" height="{h}" fill="url(#bg)"/>
+<rect width="{w}" height="{h}" fill="url(#vignette)"/>
+<rect width="{w}" height="{h}" filter="url(#grain)" opacity=".07"/>
 {body}
 </g>
 <rect x=".5" y=".5" width="{w-1}" height="{h-1}" rx="16" fill="none" stroke="{LINE}"/>
@@ -70,7 +75,7 @@ def corner_brackets(w, h, m=14, s=16, c=CYAN):
 
 def header(label, title, x=24):
     return (f'<text x="{x}" y="32" class="sans" font-size="10.5" font-weight="500" letter-spacing="2.6" fill="{GOLD}">{label}</text>'
-            f'<text x="{x}" y="60" class="serif" font-size="26" fill="{TXT}">{title}</text>')
+            f'<text x="{x}" y="60" class="serif" font-size="27" letter-spacing="-.3" fill="{TXT}">{title}</text>')
 
 
 def write(name, svg):
@@ -158,8 +163,8 @@ def hero():
 """
     text = f"""
 <g class="rise" style="animation-delay:.1s"><text x="64" y="100" class="sans" font-size="11.5" font-weight="500" letter-spacing="3.2" fill="{GOLD}">AEROSPACE ENGINEER  ·  PROPULSION &amp; ENERGETICS</text></g>
-<g class="rise" style="animation-delay:.3s"><text x="60" y="180" class="serif" font-size="88" fill="{TXT}">Manikandan</text></g>
-<g class="rise" style="animation-delay:.5s"><text x="60" y="256" class="serif" font-size="88" font-style="italic" fill="url(#nameG)">Shanmugam</text></g>
+<g class="rise" style="animation-delay:.3s"><text x="60" y="180" class="serif" font-size="88" letter-spacing="-1.5" fill="{TXT}">Manikandan</text></g>
+<g class="rise" style="animation-delay:.5s"><text x="60" y="256" class="serif" font-size="88" font-style="italic" letter-spacing="-1.5" fill="url(#nameG)">Shanmugam</text></g>
 <g class="rise" style="animation-delay:.8s"><text x="64" y="300" class="sans" font-size="16" fill="{TXT}" fill-opacity=".85">MSc Aeronautics &amp; Space, ISAE-ENSMA — propulsion, energetics &amp; autonomous flight</text></g>
 <g class="rise" style="animation-delay:1s">
   <rect x="64" y="328" width="392" height="34" rx="17" fill="{GOLD}" fill-opacity=".06" stroke="{GOLD}" stroke-opacity=".55"/>
@@ -726,31 +731,31 @@ def divider():
 # AUTONOMOUS FLIGHT — typeset project cards with logos
 # =====================================================================
 CARDS = [
-    ("card-dassault.svg", ["emblem:vtol"],
-     "ENSMAERO · ISAE-ENSMA · OCTOBER 2025 – PRESENT",
+    ("card-dassault.svg", ["dassault-aviation.svg", "isae-ensma.png"],
+     "ENSMAERO, ISAE-ENSMA · October 2025 – present",
      "Dassault UAV Challenge 2026", "Jury’s Favourite Award",
      "Our modular autonomous VTOL 4+1 with a 2 m wingspan won the Prix Coup de cœur du jury among 28 teams. "
      "I was responsible for propulsion design and CFD optimisation. I also integrated the sensors with a SpeedyBee F405 "
      "flight controller and wrote control algorithms in Python and C++, refined through ground and flight testing."),
-    ("card-phoenix.svg", ["team-phoenix.jpg"],
-     "LOYOLA-ICAM, CHENNAI · 2022 – 2025",
+    ("card-phoenix.svg", ["team-phoenix.jpg", "sae-international.svg"],
+     "Loyola-ICAM, Chennai · 2022 – 2025",
      "Team Phoenix", "Founder & captain",
      "I built a 20-member UAV team from scratch, and it won an award at the SAE Autonomous Drone Development Challenge 2024 "
      "(payload category). We took each drone from SolidWorks design through FEA and 3D printing to flight test, with Gazebo "
      "simulation along the way. I logged more than 100 hours as the team’s pilot."),
     ("card-reconnaissance.svg", ["team-reconnaissance.jpg"],
-     "HINDUSTAN TECHNOLOGY BUSINESS INCUBATOR · 2024 – 2025",
+     "Hindustan Technology Business Incubator · 2024 – 2025",
      "Team Reconnaissance", "VTOL design & development",
      "Autonomous VTOL aircraft built on a Holybro flight controller with an NVIDIA Jetson Nano companion computer. "
      "I ran the flight-test campaigns, wrote Python pipelines for flight data, and tuned mission planning for fixed-wing "
      "and multirotor platforms."),
-    ("card-mcp.svg", ["emblem:mcp"],
-     "PERSONAL PROJECT · ONGOING",
+    ("card-mcp.svg", ["ardupilot.png"],
+     "Personal project · ongoing",
      "Natural-language drone control", "Pixhawk · ArduPilot · MAVLink",
      "A Python server that turns language-model tool calls into MAVLink commands for a Pixhawk running ArduPilot: "
      "telemetry, arming, take-off, waypoints, landing and return to launch. I test it in ArduPilot’s simulator."),
     ("card-fc.svg", ["emblem:pid"],
-     "PERSONAL PROJECT",
+     "Personal project",
      "A flight controller of my own", "Automatic PID tuning",
      "A custom quadcopter controller that tunes its own PID control loops, so a new build is ready to fly as soon as it’s set up."),
 ]
@@ -771,6 +776,19 @@ def _measure():
 
 
 def _wrap(text, width, size, measure):
+    """Balanced wrap: same line count as a greedy wrap, but even line lengths (no orphans)."""
+    best = _greedy(text, width, size, measure)
+    lo = width * .5
+    while width - lo > 2:
+        mid = (lo + width) / 2
+        if len(_greedy(text, mid, size, measure)) == len(best):
+            width = mid
+        else:
+            lo = mid
+    return _greedy(text, width, size, measure)
+
+
+def _greedy(text, width, size, measure):
     lines, cur = [], ""
     for w in text.split():
         t = (cur + " " + w).strip()
@@ -832,15 +850,15 @@ def _logo_tile(x, y, w, h, fname):
                 f'<rect x="{x+.5}" y="{y+.5}" width="{w-1}" height="{h-1}" rx="14" fill="none" stroke="{GOLD}" stroke-opacity=".35"/>')
     path = os.path.join(OUT, "logos", fname)
     data = base64.b64encode(open(path, "rb").read()).decode()
-    mime = "image/svg+xml" if fname.endswith(".svg") else "image/jpeg"
-    dark = fname in ("team-phoenix.jpg", "team-reconnaissance.jpg")  # logos on black artwork
-    pad = {"team-phoenix.jpg": 0, "team-reconnaissance.jpg": 6}.get(fname, 14)
-    bg = "#000" if dark else "#F6F2EA"
+    mime = {"svg": "image/svg+xml", "png": "image/png"}.get(fname.rsplit(".", 1)[-1], "image/jpeg")
+    own = fname in ("team-phoenix.jpg", "team-reconnaissance.jpg")  # my teams' marks keep their colours
+    pad = {"team-phoenix.jpg": 0, "team-reconnaissance.jpg": 8}.get(fname, 24)
     clip = f"clip{abs(hash((fname, x, y)))}"
     fit = "xMidYMid slice" if pad == 0 else "xMidYMid meet"
+    tone = "" if own else ' filter="url(#mono)" opacity=".92"'
     return (f'<clipPath id="{clip}"><rect x="{x}" y="{y}" width="{w}" height="{h}" rx="14"/></clipPath>'
-            f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="14" fill="{bg}"/>'
-            f'<image clip-path="url(#{clip})" x="{x+pad}" y="{y+pad}" width="{w-2*pad}" height="{h-2*pad}" preserveAspectRatio="{fit}" href="data:{mime};base64,{data}"/>'
+            f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="14" fill="{"#000" if own else BG0}"/>'
+            f'<image clip-path="url(#{clip})" x="{x+pad}" y="{y+pad}" width="{w-2*pad}" height="{h-2*pad}" preserveAspectRatio="{fit}"{tone} href="data:{mime};base64,{data}"/>'
             f'<rect x="{x+.5}" y="{y+.5}" width="{w-1}" height="{h-1}" rx="14" fill="none" stroke="{GOLD}" stroke-opacity=".35"/>')
 
 
@@ -848,7 +866,7 @@ def cards():
     measure = _measure()
     W, PAD, TW, TH, GAP = 1200, 36, 176, 128, 12
     tx = PAD + TW + 40
-    tw = W - tx - PAD
+    tw = 780  # ~95 characters: a comfortable measure, leaves air on the right
     css = """
 .rise{opacity:0;animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards}
 @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -871,8 +889,8 @@ def cards():
         content = f"""
 {tiles}
 <g class="rise" style="animation-delay:.1s">
-  <text x="{tx}" y="{y0+14}" class="sans" font-size="10.5" font-weight="500" letter-spacing="2.6" fill="{GOLD}">{label}</text>
-  <text x="{tx}" y="{y0+52}" class="serif" font-size="34" fill="{TXT}">{title} <tspan font-style="italic" fill="{GOLD}">— {sub}</tspan></text>
+  <text x="{tx}" y="{y0+14}" class="sans" font-size="13" font-weight="500" fill="{GOLD}">{label}</text>
+  <text x="{tx}" y="{y0+52}" class="serif" font-size="36" letter-spacing="-.4" fill="{TXT}">{title} <tspan font-style="italic" fill="{GOLD}">— {sub}</tspan></text>
 </g>
 <rect class="rule" x="{tx}" y="{y0+68}" width="64" height="1.5" fill="{GOLD}"/>
 <g class="rise" style="animation-delay:.3s"><text x="{tx}" y="{y0+98}" class="sans" font-size="15" fill="{TXT}" fill-opacity=".86">{tspans}</text></g>
@@ -886,8 +904,8 @@ def cards():
 FONTS = [  # (family, style, weight, url)
     ("Instrument Serif", "normal", 400, "https://fonts.gstatic.com/s/instrumentserif/v5/jizBRFtNs2ka5fXjeivQ4LroWlx-2zI.ttf"),
     ("Instrument Serif", "italic", 400, "https://fonts.gstatic.com/s/instrumentserif/v5/jizHRFtNs2ka5fXjeivQ4LroWlx-6zATiw.ttf"),
-    ("Inter", "normal", 400, "https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf"),
-    ("Inter", "normal", 500, "https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI6fMZg.ttf"),
+    ("Geist", "normal", 400, "https://fonts.gstatic.com/s/geist/v5/gyBhhwUxId8gMGYQMKR3pzfaWI_RnOM4nQ.ttf"),
+    ("Geist", "normal", 500, "https://fonts.gstatic.com/s/geist/v5/gyBhhwUxId8gMGYQMKR3pzfaWI_RruM4nQ.ttf"),
 ]
 
 
