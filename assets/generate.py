@@ -726,13 +726,13 @@ def divider():
 # AUTONOMOUS FLIGHT — typeset project cards with logos
 # =====================================================================
 CARDS = [
-    ("card-dassault.svg", ["dassault-aviation.svg", "isae-ensma.jpg"],
+    ("card-dassault.svg", ["emblem:vtol"],
      "ENSMAERO · ISAE-ENSMA · OCTOBER 2025 – PRESENT",
      "Dassault UAV Challenge 2026", "Jury’s Favourite Award",
      "Our modular autonomous VTOL 4+1 with a 2 m wingspan won the Prix Coup de cœur du jury among 28 teams. "
      "I was responsible for propulsion design and CFD optimisation. I also integrated the sensors with a SpeedyBee F405 "
      "flight controller and wrote control algorithms in Python and C++, refined through ground and flight testing."),
-    ("card-phoenix.svg", ["team-phoenix.jpg", "sae-international.svg"],
+    ("card-phoenix.svg", ["team-phoenix.jpg"],
      "LOYOLA-ICAM, CHENNAI · 2022 – 2025",
      "Team Phoenix", "Founder & captain",
      "I built a 20-member UAV team from scratch, and it won an award at the SAE Autonomous Drone Development Challenge 2024 "
@@ -744,12 +744,12 @@ CARDS = [
      "Autonomous VTOL aircraft built on a Holybro flight controller with an NVIDIA Jetson Nano companion computer. "
      "I ran the flight-test campaigns, wrote Python pipelines for flight data, and tuned mission planning for fixed-wing "
      "and multirotor platforms."),
-    ("card-mcp.svg", ["ardupilot.svg"],
+    ("card-mcp.svg", ["emblem:mcp"],
      "PERSONAL PROJECT · ONGOING",
      "Natural-language drone control", "Pixhawk · ArduPilot · MAVLink",
      "A Python server that turns language-model tool calls into MAVLink commands for a Pixhawk running ArduPilot: "
      "telemetry, arming, take-off, waypoints, landing and return to launch. I test it in ArduPilot’s simulator."),
-    ("card-fc.svg", [None],
+    ("card-fc.svg", ["emblem:pid"],
      "PERSONAL PROJECT",
      "A flight controller of my own", "Automatic PID tuning",
      "A custom quadcopter controller that tunes its own PID control loops, so a new build is ready to fly as soon as it’s set up."),
@@ -781,15 +781,55 @@ def _wrap(text, width, size, measure):
     return lines + [cur]
 
 
+def _emblem(kind, w, h):
+    """Gold line-art emblems drawn in the page's own style (local coords, w x h tile)."""
+    g = f'stroke="{GOLD}" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"'
+    cx, cy = w / 2, h / 2
+    if kind == "vtol":  # top view of the VTOL 4+1, lift rotors spinning
+        rotors = "".join(
+            f'<circle cx="{cx+dx}" cy="{cy+dy}" r="15" stroke-opacity=".3" stroke-dasharray="2 3"/>'
+            f'<g class="spin" style="animation-duration:.3s{";animation-direction:reverse" if dx*dy > 0 else ""}"><line x1="{cx+dx-14}" y1="{cy+dy}" x2="{cx+dx+14}" y2="{cy+dy}" stroke-width="2"/></g>'
+            for dx, dy in ((-26, -30), (26, -30), (-26, 30), (26, 30)))
+        return (f'<g {g}>{rotors}'
+                f'<rect x="{cx-70}" y="{cy-5}" width="140" height="10" rx="5" fill="{BG0}"/>'
+                f'<line x1="{cx-26}" y1="{cy-30}" x2="{cx-26}" y2="{cy+40}"/><line x1="{cx+26}" y1="{cy-30}" x2="{cx+26}" y2="{cy+40}"/>'
+                f'<line x1="{cx-30}" y1="{cy+42}" x2="{cx+30}" y2="{cy+42}" stroke-width="2.5"/>'
+                f'<path d="M{cx},{cy-44} C{cx+6},{cy-38} {cx+6},{cy-20} {cx+5},{cy+34} L{cx-5},{cy+34} C{cx-6},{cy-20} {cx-6},{cy-38} {cx},{cy-44} Z" fill="{BG0}"/>'
+                f'<line x1="{cx-7}" y1="{cy+37}" x2="{cx+7}" y2="{cy+37}" stroke="{ORANGE}" stroke-width="2" class="pulse"/></g>')
+    if kind == "mcp":  # a sentence becomes a flight path
+        path = f"M{cx-18},{cy-2} C{cx+8},{cy-2} {cx-4},{cy+34} {cx+26},{cy+30} S{cx+48},{cy-6} {cx+52},{cy-22}"
+        return (f'<g {g}>'
+                f'<path d="M{cx-66},{cy-34} h48 a8,8 0 0 1 8,8 v20 a8,8 0 0 1 -8,8 h-30 l-10,10 v-10 h-8 a8,8 0 0 1 -8,-8 v-20 a8,8 0 0 1 8,-8 Z"/>'
+                + "".join(f'<circle cx="{cx-54+i*12}" cy="{cy-16}" r="2" fill="{GOLD}" stroke="none" class="pulse" style="animation-delay:{-i*.4:.1f}s"/>' for i in range(3))
+                + f'<path d="{path}" stroke-dasharray="3 5" class="flow" stroke-opacity=".8"/>'
+                f'<circle cx="{cx+26}" cy="{cy+30}" r="3" stroke-opacity=".7"/>'
+                f'<g transform="translate({cx+52} {cy-30})"><line x1="-9" y1="-7" x2="9" y2="7"/><line x1="-9" y1="7" x2="9" y2="-7"/>'
+                + "".join(f'<circle cx="{px}" cy="{py}" r="4.5"/>' for px, py in ((-11, -9), (11, -9), (-11, 9), (11, 9)))
+                + f'<rect x="-3.5" y="-3.5" width="7" height="7" rx="1.5" fill="{BG0}"/></g>'
+                f'<circle r="2.6" fill="{ORANGE}" stroke="none"><animateMotion dur="3s" repeatCount="indefinite" path="{path}"/></circle></g>')
+    if kind == "pid":  # step response settling onto its setpoint
+        x0, x1, ybase, yset = 22, w - 20, h - 26, 44
+        pts = []
+        for i in range(61):
+            t = i / 60 * 6.5
+            yv = 1 - math.exp(-0.55 * t) * (math.cos(2.2 * t) + 0.25 * math.sin(2.2 * t))
+            pts.append(f"{x0 + (x1 - x0) * i / 60:.1f},{ybase - (ybase - yset) * yv:.1f}")
+        curve = "M" + " L".join(pts)
+        return (f'<g {g}>'
+                f'<line x1="{x0}" y1="{ybase}" x2="{x1}" y2="{ybase}" stroke-opacity=".3"/>'
+                f'<line x1="{x0}" y1="{yset}" x2="{x1}" y2="{yset}" stroke-opacity=".45" stroke-dasharray="3 4"/>'
+                f'<path d="{curve}" stroke-width="2" pathLength="100" stroke-dasharray="100" class="draw"/></g>'
+                f'<text x="{x0}" y="{h-10}" class="serif" font-style="italic" font-size="14" fill="{GOLD}" fill-opacity=".8">K<tspan font-size="9" dy="2">p</tspan><tspan dy="-2">  K</tspan><tspan font-size="9" dy="2">i</tspan><tspan dy="-2">  K</tspan><tspan font-size="9" dy="2">d</tspan></text>'
+                f'<text x="{x1}" y="{yset-6}" text-anchor="end" class="sans" font-size="8.5" font-weight="500" letter-spacing="1.5" fill="{MUTED}">SETPOINT</text>')
+    raise ValueError(kind)
+
+
 def _logo_tile(x, y, w, h, fname):
     import base64
-    tile = f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="12" fill="#F6F2EA"/>'
-    if fname is None:  # quadcopter line icon
-        cx, cy = x + w / 2, y + h / 2
-        arms = "".join(f'<line x1="{cx}" y1="{cy}" x2="{cx+dx}" y2="{cy+dy}"/><circle cx="{cx+dx}" cy="{cy+dy}" r="13" class="prop-ring"/>'
-                       for dx, dy in ((-30, -24), (30, -24), (-30, 24), (30, 24)))
-        return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="12" fill="{BG0}" stroke="{GOLD}" stroke-opacity=".5"/>'
-                f'<g stroke="{GOLD}" stroke-width="1.6" fill="none">{arms}<rect x="{cx-9}" y="{cy-9}" width="18" height="18" rx="4" fill="{BG0}"/></g>')
+    if fname.startswith("emblem:"):
+        return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="14" fill="{BG0}"/>'
+                f'<g transform="translate({x} {y})">{_emblem(fname[7:], w, h)}</g>'
+                f'<rect x="{x+.5}" y="{y+.5}" width="{w-1}" height="{h-1}" rx="14" fill="none" stroke="{GOLD}" stroke-opacity=".35"/>')
     path = os.path.join(OUT, "logos", fname)
     data = base64.b64encode(open(path, "rb").read()).decode()
     mime = "image/svg+xml" if fname.endswith(".svg") else "image/jpeg"
@@ -798,15 +838,15 @@ def _logo_tile(x, y, w, h, fname):
     bg = "#000" if dark else "#F6F2EA"
     clip = f"clip{abs(hash((fname, x, y)))}"
     fit = "xMidYMid slice" if pad == 0 else "xMidYMid meet"
-    return (f'<clipPath id="{clip}"><rect x="{x}" y="{y}" width="{w}" height="{h}" rx="12"/></clipPath>'
-            f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="12" fill="{bg}"/>'
+    return (f'<clipPath id="{clip}"><rect x="{x}" y="{y}" width="{w}" height="{h}" rx="14"/></clipPath>'
+            f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="14" fill="{bg}"/>'
             f'<image clip-path="url(#{clip})" x="{x+pad}" y="{y+pad}" width="{w-2*pad}" height="{h-2*pad}" preserveAspectRatio="{fit}" href="data:{mime};base64,{data}"/>'
-            f'<rect x="{x+.5}" y="{y+.5}" width="{w-1}" height="{h-1}" rx="12" fill="none" stroke="{GOLD}" stroke-opacity=".35"/>')
+            f'<rect x="{x+.5}" y="{y+.5}" width="{w-1}" height="{h-1}" rx="14" fill="none" stroke="{GOLD}" stroke-opacity=".35"/>')
 
 
 def cards():
     measure = _measure()
-    W, PAD, TW, TH, GAP = 1200, 36, 168, 104, 12
+    W, PAD, TW, TH, GAP = 1200, 36, 176, 128, 12
     tx = PAD + TW + 40
     tw = W - tx - PAD
     css = """
@@ -814,7 +854,8 @@ def cards():
 @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .rule{transform-box:fill-box;transform-origin:0 50%;animation:rule 1.4s cubic-bezier(.3,.7,.2,1) .2s both}
 @keyframes rule{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-.prop-ring{animation:pulse 2.4s ease-in-out infinite}
+.draw{animation:draw 4.5s cubic-bezier(.4,.1,.2,1) infinite}
+@keyframes draw{0%{stroke-dashoffset:100}55%,85%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
 """
     from xml.sax.saxutils import escape as esc
     for name, logos, label, title, sub, body in CARDS:
